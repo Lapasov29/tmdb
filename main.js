@@ -40,7 +40,8 @@ nextBtn.onclick = () =>{
 }
 
 prevBtn.onclick = () =>{
-    // if(!page.textContent == 1){
+    if(parseInt(page.textContent) - 1 > 0){
         page.textContent = parseInt(page.textContent) - 1 
-    // }
+        render()
+    }
 }
