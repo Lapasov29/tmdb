@@ -10,11 +10,12 @@ let nextBtn = document.querySelector('.next')
 let prevBtn = document.querySelector('.prev')
 let page = document.querySelector('.title')
 
+let status = 'top_rated'
+
 async function render(params) {
     list.innerHTML = null
-    let api = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=dcea1fd7b3e65d34387ad6de7ef9cc5e&page=${page.textContent}`)
+    let api = await fetch(`https://api.themoviedb.org/3/movie/${status}?api_key=dcea1fd7b3e65d34387ad6de7ef9cc5e&page=${page.textContent}`)
     let res = await api.json()
-    // console.log(res.results);
     for(let i of res.results){
         let movie = document.createElement('div')
         movie.className = 'movie'
@@ -32,7 +33,7 @@ async function render(params) {
     }
 }
 
-render()
+render('top_rated')
 
 nextBtn.onclick = () =>{
     page.textContent = parseInt(page.textContent) + 1
@@ -45,3 +46,21 @@ prevBtn.onclick = () =>{
         render()
     }
 }
+
+btntop.onclick = () => {
+    status = 'top_rated'
+    page.textContent = 1
+    render()
+}
+btnpopular.onclick = () =>{
+    status = 'popular'
+    page.textContent = 1
+    render()
+}
+
+btnupcoming.onclick = () =>{
+    status = 'upcoming'
+    page.textContent = 1
+    render()
+}
+
