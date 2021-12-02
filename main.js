@@ -13,6 +13,7 @@ let page = document.querySelector('.title')
 let searchField = document.querySelector('#search')
 let minField = document.querySelector('#min')
 let maxField = document.querySelector('#max')
+let score = document.querySelector('#score')
 let findBtn = document.querySelector('#find')
 
 let status = 'top_rated'
@@ -29,7 +30,7 @@ async function render(params) {
     
                 <div class="movie-info">
                     <h3>${i.title}</h3>
-                    <span class="orange">${i.vote_average.includes(searchField.value) ? i.vote_average : }</span>
+                    <span class="orange">${i.vote_average}</span>
                     </div>
                     <span class="date">${i.release_date}</span>
                 </div>
@@ -71,7 +72,30 @@ btnupcoming.onclick = () =>{
 
 
 findBtn.onclick = () => {
-    console.log(searchField.value);
-    searchField.value = null
+    search()
+    // searchField.value = null
+}
 
+async function search(params) {
+    list.innerHTML = null
+    let api = await fetch(`https://api.themoviedb.org/3/movie/${status}?api_key=dcea1fd7b3e65d34387ad6de7ef9cc5e&page=${page.textContent}`)
+    let res = await api.json()
+    for(let i of res.results){
+        if((i.title.includes(searchField.value))){
+                let movie = document.createElement('div')
+                movie.className = 'movie'
+                movie.innerHTML = `
+                    <img src="https://image.tmdb.org/t/p/w500${i.poster_path}" alt="Fast &amp; Furious Presents: Hobbs &amp; Shaw">
+            
+                        <div class="movie-info">
+                            <h3>${i.title}</h3>
+                            <span class="orange">${i.vote_average}</span>
+                            </div>
+                            <span class="date">${i.release_date}</span>
+                        </div>
+                    `
+                list.append(movie)
+        }
+    }
+    searchField.value = null
 }
