@@ -10,6 +10,11 @@ let nextBtn = document.querySelector('.next')
 let prevBtn = document.querySelector('.prev')
 let page = document.querySelector('.title')
 
+let searchField = document.querySelector('#search')
+let minField = document.querySelector('#min')
+let maxField = document.querySelector('#max')
+let findBtn = document.querySelector('#find')
+
 let status = 'top_rated'
 
 async function render(params) {
@@ -24,7 +29,7 @@ async function render(params) {
     
                 <div class="movie-info">
                     <h3>${i.title}</h3>
-                    <span class="orange">${i.vote_average}</span>
+                    <span class="orange">${i.vote_average.includes(searchField.value) ? i.vote_average : }</span>
                     </div>
                     <span class="date">${i.release_date}</span>
                 </div>
@@ -64,3 +69,9 @@ btnupcoming.onclick = () =>{
     render()
 }
 
+
+findBtn.onclick = () => {
+    console.log(searchField.value);
+    searchField.value = null
+
+}
